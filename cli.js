@@ -1,27 +1,20 @@
 var Game = require("./game");
 var inquirer = require("inquirer");
 
-inquirer.prompt([
+// inquirer.prompt([
 	// {
 	// 	type: "input",
 	// 	name: "name",
 	// 	message: "Enter your name"
 	// },
-	{
-		type: "list",
-		name: "topic",
-		message: "Choose a category",
-		choices: ["Fruit","Cheese"]
-	}
-]).then(answers => {
+	
+// ]).then(answers => {
+	// instance.playerName = answers.name;
 
 	var instance = new Game();
-	
-	instance.playerName = answers.name;
-	instance.chooseTopic(answers.topic);
-	instance.startGame();
-	instance.guessLetter();
-})
+
+	instance.startMenu();
+// })
 
 //CLI should only prompt for name
 	//name will be used for leaderboard
