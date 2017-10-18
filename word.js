@@ -23,7 +23,7 @@ Word.prototype.displayWord = function () {
 	for(var i=0; i<this.letters.length; i++){
 		this.displayValue += this.letters[i].displayLetter();
 	}
-	console.log("\nDisplay: " + this.displayValue + "\n");
+	console.log(`${this.displayValue} \n`);
 }
 
 module.exports = Word;

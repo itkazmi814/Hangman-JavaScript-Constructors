@@ -68,13 +68,16 @@ Game.prototype.guessLetter = function () {
 					}
 				}
 
-				//display updated word
-				this.chosenWord.displayWord()
 
 			}else{
 				console.log(`\n"${input}" is an incorrect guess :(\n`)
 				this.lives--;
 			}
+
+			console.log(`${this.lives} lives remaining\n`)
+
+			//display updated word
+			this.chosenWord.displayWord()
 
 			//Check for game over condition
 			if(this.chosenWord.displayValue.indexOf("_") === -1) {
@@ -82,8 +85,6 @@ Game.prototype.guessLetter = function () {
 			}else if(this.lives === 0) {
 				return this.gameWon(false);	
 			}
-
-			console.log(`${this.lives} lives remaining\n`)
 
 			this.guessLetter();
 		})
