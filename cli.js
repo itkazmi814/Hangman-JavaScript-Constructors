@@ -6,7 +6,6 @@ var instance = new Game();
 startMenu();
 
 //Starts game or Quits game
-//Put in CLI
 function startMenu () {
 	inquirer.prompt([{
 		type: "list",
@@ -36,10 +35,11 @@ function getTopic () {
 		message: "Choose a category",
 		choices: ["Fruit","Cheese"]
 	}]).then(answers => {
-		instance.setTopic(answers.topic);
+		instance.startGame(answers.topic);
 		console.log(`Currently guessing: ${instance.wordString}`);
-		//initializes Word object
-		instance.startGame();
+	
+		console.log(instance.chosenWord.displayValue)
+
 		//prompts user to guess a letter
 		guessLetter();
 	})	
@@ -49,8 +49,6 @@ function getTopic () {
 function guessLetter () {
 	//Recursion while alive
 	if(instance.lives > 0) {
-
-		console.log(`${instance.chosenWord.displayValue}\n`);
 
 		inquirer.prompt([{
 				type: "input",
@@ -62,19 +60,26 @@ function guessLetter () {
 			var pressedLetter = answers.guessedLetter;
 
 			//Determines if pressedLetter is in the Word object and acts accordingly
-			instance.parseWord(pressedLetter);
+			if(instance.parser(pressedLetter) === true) {
+				console.log("\nCORRECT !!\n");
+			}else{
+				console.log("\nINCORRECT !!\n")
+			}
 
+			console.log(`${instance.chosenWord.displayValue}\n`)
 			console.log(`${instance.lives} lives remaining\n`);
 
 			//Display updated word, taking displayValue's from the letter objects
-			instance.chosenWord.displayWord();
 
 			//Check for game over condition
-			if(instance.chosenWord.displayValue.indexOf("_") === -1 || instance.lives === 0) {
-				console.log(instance.gameOver());
+			if(instance.gameOver() === true) {
+				console.log("You won the game!\n")
+				return startMenu();
+			}else if(instance.gameOver() === false) {
+				console.log("You lost :(\n")
 				return startMenu();
 			}
-
+			//Guess another letter
 			guessLetter();
 		})
 	}

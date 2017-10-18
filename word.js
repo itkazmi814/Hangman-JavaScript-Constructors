@@ -17,11 +17,29 @@ Word.prototype.getLetters = function () {
 //displays array of letter objects
 //allow special characters and spaces to automatically show
 //probably only turn alphabet letters into " _ "
-Word.prototype.displayWord = function () {
+Word.prototype.updateDisplayValue = function () {
 	this.displayValue = "";
 
 	for(var i=0; i<this.letters.length; i++){
 		this.displayValue += this.letters[i].displayLetter();
+	}
+}
+
+Word.prototype.parseWord = function(input) {
+	//if the letter is in the word
+	if(this.value.indexOf(input) > -1) {
+		//set their letter.guessed = true
+		for(var i=0; i<this.letters.length; i++){
+			//put this in letters.js?
+			if(input === this.letters[i].value){
+				this.letters[i].guessed = true;
+			}
+		}
+		this.updateDisplayValue();
+		return true;
+	//if the letter is not in the word
+	}else{
+		return false;
 	}
 }
 

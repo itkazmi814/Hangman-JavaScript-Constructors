@@ -3,8 +3,9 @@ var Word = require("./word");
 var inquirer = require("inquirer");
 
 function Game () {
+	//array of strings
 	this.possibleWords;
-	this.wordString;
+	//Word object
 	this.chosenWord;
 	this.currentTopic;
 	this.score = 0;
@@ -12,7 +13,22 @@ function Game () {
 	this.playerName;
 }
 
+//sets chosenWord
+Game.prototype.startGame = function (topic) {
+	//reset lives so the game doesn't immediately stop
+	this.lives = 5;
+
+	this.setTopic(topic)
+
+	//Creates and displays word
+	//move all of this into .setTopic
+	
+	this.chosenWord.getLetters();
+	this.chosenWord.updateDisplayValue();
+}
+
 //Selects array to be used for possibleWords
+//potentially move things related to setTopic to a category.js
 Game.prototype.setTopic = function (topic) {
 	switch(topic) {
 		case "Fruit":
@@ -23,47 +39,26 @@ Game.prototype.setTopic = function (topic) {
 			this.possibleWords = ["provolone","gouda","swiss"];
 			break;
 	}	
-
 	//Initial word set up
 	var rand = Math.floor(Math.random()*3)
-	this.wordString = this.possibleWords[rand];
-	// console.log(`wordString: ${this.wordString}`)
-}
-
-//sets chosenWord
-Game.prototype.startGame = function () {
-	//reset lives so the game doesn't immediately stop
-	this.lives = 5;
-	//Creates and displays word
+	var wordString = this.possibleWords[rand];
 	this.chosenWord = new Word(this.wordString);
-	this.chosenWord.getLetters();
-	this.chosenWord.displayWord();
-}
-
-
-//Move to word.js
-Game.prototype.parseWord = function(input){
-	//if the letter is in the word
-	if(this.wordString.indexOf(input) > -1) {
-		console.log("\nCORRECT !!");
-		//set their letter.guessed = true
-		for(var i=0; i<this.chosenWord.letters.length; i++){
-			if(input === this.chosenWord.letters[i].value){
-				this.chosenWord.letters[i].guessed = true;
-			}
-		}
-	//if the letter is not in the word
-	}else{
-		console.log("\nINCORRECT !!")
-		this.lives--;
-	}
 }
 
 Game.prototype.gameOver = function () {
-	if(this.lives === 0){
-		return "You lost :(\n";
+	if(this.chosenWord.displayValue.indexOf(" _ ") === -1){
+		return true;
+	}else if(this.lives === 0){
+		return false;
+	}
+}
+
+Game.prototype.parser = function (input) {
+	if(this.chosenWord.parseWord(input) === true){
+		return true;
 	}else{
-		return "You won the game!\n";
+		this.lives--;
+		return false
 	}
 }
 
