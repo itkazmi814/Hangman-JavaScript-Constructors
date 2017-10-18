@@ -13,6 +13,7 @@ function Game () {
 }
 
 //Starts game or Quits game
+//Put in CLI
 Game.prototype.startMenu = function () {
 	inquirer.prompt([{
 		type: "list",
@@ -27,13 +28,14 @@ Game.prototype.startMenu = function () {
 				break;
 
 			case "Quit":
-				console.log("\nThanks for playing!");
+				console.log("\nThanks for playing!\n");
 				break;
 		}
 	})
 }
 
 //Gets game topic and then starts game
+//Put in CLI
 Game.prototype.getTopic = function () {
 	//inquirer used to set the topic
 	inquirer.prompt([{
@@ -79,7 +81,8 @@ Game.prototype.startGame = function () {
 	this.guessLetter();
 }
 
-
+//main function
+//
 Game.prototype.guessLetter = function () {
 	//Recursion while alive
 	if(this.lives > 0) {

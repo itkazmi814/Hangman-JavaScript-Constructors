@@ -1,7 +1,5 @@
 function Letter (val) {
-	//string representing the letter
 	this.value = val;
-	//boolean used to decide how to display the letter
 	this.guessed = false;
 }
 

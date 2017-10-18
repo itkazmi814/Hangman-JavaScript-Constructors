@@ -16,7 +16,7 @@ Word.prototype.getLetters = function () {
 
 //displays array of letter objects
 //allow special characters and spaces to automatically show
-	//probably only turn alphabet letters into " _ "
+//probably only turn alphabet letters into " _ "
 Word.prototype.displayWord = function () {
 	this.displayValue = "";
 
