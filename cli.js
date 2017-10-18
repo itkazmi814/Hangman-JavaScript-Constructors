@@ -1,5 +1,5 @@
 var Game = require("./game");
-var inquirer = require("inquirer");
+// var inquirer = require("inquirer");
 
 // inquirer.prompt([
 	// {
