@@ -29,7 +29,7 @@ Word.prototype.parseWord = function(input) {
 	//if the letter is in the word
 	if(this.value.indexOf(input) > -1) {
 		for(var i=0; i<this.letters.length; i++){
-			//find the 
+			//reveal the letter
 			this.letters[i].changeLetterDisplay(input);
 		}
 		this.updateDisplayValue();

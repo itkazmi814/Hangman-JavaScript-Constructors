@@ -8,6 +8,14 @@ function Game () {
 	this.lives = 5;
 }
 
+Game.prototype.validateInput = function (input) {
+	var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+	if(alphabet.indexOf(input) > -1){
+		return true;
+	}else{
+		return false;
+	}
+}
 //sets chosenWord
 Game.prototype.startGame = function (topic) {
 	this.lives = 5;
@@ -16,7 +24,7 @@ Game.prototype.startGame = function (topic) {
 }
 
 //Selects array to be used for possibleWords
-Game.prototype.setTopic = function (topic) {
+Game.prototype.setWord = function (topic) {
 	switch(topic) {
 		case "Fruit":
 			this.possibleWords = ["apple","banana","orange"];
@@ -27,7 +35,7 @@ Game.prototype.setTopic = function (topic) {
 			break;
 	}	
 	//Initial word set up
-	var rand = Math.floor(Math.random()*3)
+	var rand = Math.floor(Math.random()*3);
 	var wordString = this.possibleWords[rand];
 	this.chosenWord = new Word(wordString);
 }

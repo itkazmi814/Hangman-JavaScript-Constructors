@@ -4,7 +4,8 @@ function Letter (val) {
 }
 
 Letter.prototype.displayLetter = function () {
-	if(this.guessed){
+	if(this.guessed 
+		|| this.value === " " || this.value === "-"){
 		return ` ${this.value} `;
 	}else{
 		return " _ "

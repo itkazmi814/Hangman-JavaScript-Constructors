@@ -36,11 +36,11 @@ function getTopic () {
 		message: "Choose a category",
 		choices: ["Fruit","Cheese"]
 	}]).then(answers => {
-		instance.setTopic(answers.topic)
+		instance.setWord(answers.topic)
 		instance.startGame();
 		console.log(`\nCurrently guessing: ${instance.chosenWord.value}`);
 	
-		console.log(`${instance.chosenWord.displayValue}\n`)
+		console.log(`${instance.chosenWord.displayValue}\n`);
 
 		//prompts user to guess a letter
 		guessLetter();
@@ -57,18 +57,22 @@ function guessLetter () {
 				name: "guessedLetter",
 				message: "Guess a letter!"
 			}]).then(answers => {
-			//add .toLowerCase() to accept capital letters
-			//include input validation - only accept alphabet letters
-			var pressedLetter = answers.guessedLetter;
+
+			var pressedLetter = answers.guessedLetter.toLowerCase();
+			
+			if(instance.validateInput(answers.guessedLetter.toLowerCase()) === false) {
+				console.log("\nThat was not a letter!\n".red)
+				return guessLetter();
+			}
 
 			//Determines if pressedLetter is in the Word object and acts accordingly
 			if(instance.parser(pressedLetter) === true) {
 				console.log("\nCORRECT !!\n".green);
 			}else{
-				console.log("\nINCORRECT !!\n".red)
+				console.log("\nINCORRECT !!\n".red);
 			}
 
-			console.log(`${instance.chosenWord.displayValue}\n`)
+			console.log(`${instance.chosenWord.displayValue}\n`);
 			console.log(`${instance.lives} lives remaining\n`);
 
 			//Display updated word, taking displayValue's from the letter objects
@@ -86,3 +90,4 @@ function guessLetter () {
 		})
 	}
 }
+
