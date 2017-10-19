@@ -35,8 +35,9 @@ function getTopic () {
 		message: "Choose a category",
 		choices: ["Fruit","Cheese"]
 	}]).then(answers => {
-		instance.startGame(answers.topic);
-		console.log(`Currently guessing: ${instance.wordString}`);
+		instance.setTopic(answers.topic)
+		instance.startGame();
+		console.log(`Currently guessing: ${instance.chosenWord.value}`);
 	
 		console.log(instance.chosenWord.displayValue)
 

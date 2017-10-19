@@ -8,6 +8,7 @@ function Word (val){
 
 //creates array of letter objects
 Word.prototype.getLetters = function () {
+	console.log("generated word: " + this.value)
 	for(var i=0; i<this.value.length; i++){
 		var tempLetter = new Letter(this.value[i])
 		this.letters.push(tempLetter);

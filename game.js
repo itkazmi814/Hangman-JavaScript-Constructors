@@ -8,9 +8,7 @@ function Game () {
 	//Word object
 	this.chosenWord;
 	this.currentTopic;
-	this.score = 0;
 	this.lives = 5;
-	this.playerName;
 }
 
 //sets chosenWord
@@ -18,11 +16,13 @@ Game.prototype.startGame = function (topic) {
 	//reset lives so the game doesn't immediately stop
 	this.lives = 5;
 
-	this.setTopic(topic)
+	// this.setTopic(topic)
 
 	//Creates and displays word
 	//move all of this into .setTopic
-	
+
+	this.chosenWord.getLetters();
+	this.chosenWord.updateDisplayValue();
 }
 
 //Selects array to be used for possibleWords
@@ -40,9 +40,7 @@ Game.prototype.setTopic = function (topic) {
 	//Initial word set up
 	var rand = Math.floor(Math.random()*3)
 	var wordString = this.possibleWords[rand];
-	this.chosenWord = new Word(this.wordString);
-	this.chosenWord.getLetters();
-	this.chosenWord.updateDisplayValue();
+	this.chosenWord = new Word(wordString);
 }
 
 Game.prototype.gameOver = function () {
