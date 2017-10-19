@@ -16,15 +16,16 @@ Game.prototype.validateInput = function (input) {
 		return false;
 	}
 }
+
 //sets chosenWord
-Game.prototype.startGame = function (topic) {
+Game.prototype.initializeGame = function (topic) {
 	this.lives = 5;
 	this.chosenWord.getLetters();
 	this.chosenWord.updateDisplayValue();
 }
 
 //Selects array to be used for possibleWords
-Game.prototype.setWord = function (topic) {
+Game.prototype.createWord = function (topic) {
 	switch(topic) {
 		case "Fruit":
 			this.possibleWords = ["apple","banana","orange"];
