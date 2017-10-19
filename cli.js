@@ -4,8 +4,6 @@ var colors = require("colors");
 
 var instance = new Game();
 
-startMenu();
-
 //Starts game or Quits game
 function startMenu () {
 	inquirer.prompt([{
@@ -51,17 +49,6 @@ function getTopic () {
 	.then( () => console.log(`\nCurrently guessing: ${instance.chosenWord.value}`) )
 	.then( () => console.log(`${instance.chosenWord.displayValue}\n`) )
 	.then( () => guessLetter());
-
-}
-
-function userLetterInput(){
-	var question =[{
-		type: "input",
-		name: "guessedLetter",
-		message: "Guess a letter!"
-	}];
-
-	return inquirer.prompt(question);
 }
 
 //main function
@@ -76,7 +63,17 @@ function guessLetter () {
 	.then( () => console.log(`${instance.chosenWord.displayValue}\n`))
 	.then( () => console.log(`Lives remaining: ${instance.lives}\n`))
 	.then( () => displayGameResult() )
-}//end guessLetter
+}
+
+function userLetterInput(){
+	var question =[{
+		type: "input",
+		name: "guessedLetter",
+		message: "Guess a letter!"
+	}];
+
+	return inquirer.prompt(question);
+}
 
 function validate (input) {
 	pressedLetter = input;
@@ -107,3 +104,5 @@ function displayGameResult () {
 	}
 	guessLetter();
 }
+
+startMenu();
