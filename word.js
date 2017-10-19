@@ -30,10 +30,8 @@ Word.prototype.parseWord = function(input) {
 	if(this.value.indexOf(input) > -1) {
 		//set their letter.guessed = true
 		for(var i=0; i<this.letters.length; i++){
-			//put this in letters.js?
-			if(input === this.letters[i].value){
-				this.letters[i].guessed = true;
-			}
+			this.letters[i].changeLetterDisplay(input);
+			
 		}
 		this.updateDisplayValue();
 		return true;

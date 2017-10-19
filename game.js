@@ -23,8 +23,6 @@ Game.prototype.startGame = function (topic) {
 	//Creates and displays word
 	//move all of this into .setTopic
 	
-	this.chosenWord.getLetters();
-	this.chosenWord.updateDisplayValue();
 }
 
 //Selects array to be used for possibleWords
@@ -43,6 +41,8 @@ Game.prototype.setTopic = function (topic) {
 	var rand = Math.floor(Math.random()*3)
 	var wordString = this.possibleWords[rand];
 	this.chosenWord = new Word(this.wordString);
+	this.chosenWord.getLetters();
+	this.chosenWord.updateDisplayValue();
 }
 
 Game.prototype.gameOver = function () {

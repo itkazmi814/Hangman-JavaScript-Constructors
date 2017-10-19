@@ -11,4 +11,10 @@ Letter.prototype.displayLetter = function () {
 	}
 }
 
+Letter.prototype.changeLetterDisplay = function (input) {
+	if(input === this.value){
+		this.guessed = true;
+	}
+}
+
 module.exports = Letter;
