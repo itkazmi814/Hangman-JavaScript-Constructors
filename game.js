@@ -3,30 +3,19 @@ var Word = require("./word");
 var inquirer = require("inquirer");
 
 function Game () {
-	//array of strings
 	this.possibleWords;
-	//Word object
 	this.chosenWord;
-	this.currentTopic;
 	this.lives = 5;
 }
 
 //sets chosenWord
 Game.prototype.startGame = function (topic) {
-	//reset lives so the game doesn't immediately stop
 	this.lives = 5;
-
-	// this.setTopic(topic)
-
-	//Creates and displays word
-	//move all of this into .setTopic
-
 	this.chosenWord.getLetters();
 	this.chosenWord.updateDisplayValue();
 }
 
 //Selects array to be used for possibleWords
-//potentially move things related to setTopic to a category.js
 Game.prototype.setTopic = function (topic) {
 	switch(topic) {
 		case "Fruit":

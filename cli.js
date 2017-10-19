@@ -1,5 +1,6 @@
 var Game = require("./game");
 var inquirer = require("inquirer");
+var colors = require("colors");
 
 var instance = new Game();
 
@@ -37,9 +38,9 @@ function getTopic () {
 	}]).then(answers => {
 		instance.setTopic(answers.topic)
 		instance.startGame();
-		console.log(`Currently guessing: ${instance.chosenWord.value}`);
+		console.log(`\nCurrently guessing: ${instance.chosenWord.value}`);
 	
-		console.log(instance.chosenWord.displayValue)
+		console.log(`${instance.chosenWord.displayValue}\n`)
 
 		//prompts user to guess a letter
 		guessLetter();
@@ -62,9 +63,9 @@ function guessLetter () {
 
 			//Determines if pressedLetter is in the Word object and acts accordingly
 			if(instance.parser(pressedLetter) === true) {
-				console.log("\nCORRECT !!\n");
+				console.log("\nCORRECT !!\n".green);
 			}else{
-				console.log("\nINCORRECT !!\n")
+				console.log("\nINCORRECT !!\n".red)
 			}
 
 			console.log(`${instance.chosenWord.displayValue}\n`)
@@ -74,10 +75,10 @@ function guessLetter () {
 
 			//Check for game over condition
 			if(instance.gameOver() === true) {
-				console.log("You won the game!\n")
+				console.log("You won the game!\n".green)
 				return startMenu();
 			}else if(instance.gameOver() === false) {
-				console.log("You lost :(\n")
+				console.log("You lost :(\n".red)
 				return startMenu();
 			}
 			//Guess another letter

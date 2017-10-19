@@ -8,7 +8,6 @@ function Word (val){
 
 //creates array of letter objects
 Word.prototype.getLetters = function () {
-	console.log("generated word: " + this.value)
 	for(var i=0; i<this.value.length; i++){
 		var tempLetter = new Letter(this.value[i])
 		this.letters.push(tempLetter);
@@ -29,10 +28,9 @@ Word.prototype.updateDisplayValue = function () {
 Word.prototype.parseWord = function(input) {
 	//if the letter is in the word
 	if(this.value.indexOf(input) > -1) {
-		//set their letter.guessed = true
 		for(var i=0; i<this.letters.length; i++){
+			//find the 
 			this.letters[i].changeLetterDisplay(input);
-			
 		}
 		this.updateDisplayValue();
 		return true;
