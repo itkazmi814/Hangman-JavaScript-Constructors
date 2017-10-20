@@ -23,7 +23,7 @@ Word.prototype.updateDisplayValue = function () {
 	}
 }
 
-Word.prototype.parseWord = function(input) {
+Word.prototype.searchThroughWord = function(input) {
 	//if the letter is in the word
 	if(this.value.indexOf(input) > -1) {
 		for(var i=0; i<this.letters.length; i++){
@@ -38,4 +38,4 @@ Word.prototype.parseWord = function(input) {
 	}
 }
 
-module.exports = Word;
+module.exports = Word; 	

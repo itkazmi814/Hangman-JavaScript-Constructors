@@ -4,6 +4,8 @@ var colors = require("colors");
 
 var instance = new Game();
 
+startMenu();
+
 //Starts game or Quits game
 function startMenu () {
 	inquirer.prompt([{
@@ -33,7 +35,7 @@ function userCategoryInput(){
 		choices: ["Fruit","Cheese"]
 	}];
 
-	return inquirer.prompt(question);
+	return inquirer.prompt(question);	
 }
 
 //Gets game topic and then starts game
@@ -51,20 +53,6 @@ function getTopic () {
 	.then( () => guessLetter());
 }
 
-//main function
-function guessLetter () {
-	var allGuesses = Promise.resolve();
-	var pressedLetter = "";
-
-	allGuesses = allGuesses
-	.then( () => userLetterInput() )
-	.then(answers => validate(answers.guessedLetter.toLowerCase()))
-	.then( () => displayGuessResult() )
-	.then( () => console.log(`${instance.chosenWord.displayValue}\n`))
-	.then( () => console.log(`Lives remaining: ${instance.lives}\n`))
-	.then( () => displayGameResult() )
-}
-
 function userLetterInput(){
 	var question =[{
 		type: "input",
@@ -75,34 +63,47 @@ function userLetterInput(){
 	return inquirer.prompt(question);
 }
 
-function validate (input) {
-	pressedLetter = input;
-	//User input validation
+//main function
+function guessLetter () {
+	//Recursion while alive
 
-	if(instance.validateInput(input) === false) {
-		console.log("\nThat was not a letter!\n".red)
-		return guessLetter();
+	if(instance.continueGame() === true){
+
+		var pressedLetter = "";
+		var allGuesses = Promise.resolve();
+
+		allGuesses = allGuesses
+		.then( () => userLetterInput() )
+		.then(answers => {
+
+			pressedLetter = answers.guessedLetter.toLowerCase();
+
+			//User input validation
+			if(instance.validateInput(pressedLetter) === false) {
+				pressedLetter = null;
+				console.log("\nThat was not a letter!\n".red)
+			}
+		})
+		.then( () => {
+			//Determines if pressedLetter is in the Word object and acts accordingly
+			if(instance.parser(pressedLetter) === false) {
+				console.log("\nINCORRECT !!\n".red);
+			}else if(instance.parser(pressedLetter) === true) {
+				console.log("\nCORRECT !!\n".green);
+			}
+		})
+		.then( () => console.log(`${instance.chosenWord.displayValue}\n`))
+		.then( () => console.log(`Lives remaining: ${instance.lives}\n`))
+		.then( () => {
+			//Check for game over condition and restarts
+			if(instance.gameWon() === true) {
+				console.log("You won the game!\n".green.bold)
+				startMenu();
+			}else if(instance.gameWon() === false) {
+				console.log("You lost :(\n".red.bold)
+				startMenu();
+			}	
+		}).then( () => guessLetter());
 	}
 }
 
-function displayGuessResult () {
-	//Determines if pressedLetter is in the Word object and acts accordingly
-	if(instance.parser(pressedLetter) === true) {
-		console.log("\nCORRECT !!\n".green);
-	}else{
-		console.log("\nINCORRECT !!\n".red);
-	}
-}
-
-function displayGameResult () {
-	if(instance.gameOver() === true) {
-		console.log("You won the game!\n".green.bold)
-		return startMenu();
-	}else if(instance.gameOver() === false) {
-		console.log("You lost :(\n".red.bold)
-		return startMenu();
-	}
-	guessLetter();
-}
-
-startMenu();

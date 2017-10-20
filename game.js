@@ -10,7 +10,10 @@ function Game () {
 
 Game.prototype.validateInput = function (input) {
 	var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-	if(alphabet.indexOf(input) > -1){
+	
+	if(input === ""){
+		return;
+	}else if(alphabet.indexOf(input) > -1){
 		return true;
 	}else{
 		return false;
@@ -41,7 +44,20 @@ Game.prototype.createWord = function (topic) {
 	this.chosenWord = new Word(wordString);
 }
 
-Game.prototype.gameOver = function () {
+Game.prototype.parser = function (input) {
+	if(this.validateInput(input) === true) {
+		if(this.chosenWord.searchThroughWord(input) === true){
+			return true;
+		}else{
+			console.log("test subtracting a life");
+			this.lives--;
+		}
+	}
+
+	return false;
+}
+
+Game.prototype.gameWon = function () {
 	if(this.chosenWord.displayValue.indexOf(" _ ") === -1){
 		return true;
 	}else if(this.lives === 0){
@@ -49,13 +65,13 @@ Game.prototype.gameOver = function () {
 	}
 }
 
-Game.prototype.parser = function (input) {
-	if(this.chosenWord.parseWord(input) === true){
+Game.prototype.continueGame = function () {
+	if(this.chosenWord.displayValue.indexOf(" _ ") > -1 && this.lives > 0){
 		return true;
 	}else{
-		this.lives--;
-		return false
+		return false;
 	}
 }
+
 
 module.exports = Game;
