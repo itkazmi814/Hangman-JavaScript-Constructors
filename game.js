@@ -49,7 +49,6 @@ Game.prototype.parser = function (input) {
 		if(this.chosenWord.searchThroughWord(input) === true){
 			return true;
 		}else{
-			console.log("test subtracting a life");
 			this.lives--;
 		}
 	}
@@ -72,6 +71,5 @@ Game.prototype.continueGame = function () {
 		return false;
 	}
 }
-
 
 module.exports = Game;

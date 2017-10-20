@@ -6,7 +6,6 @@ var instance = new Game();
 
 startMenu();
 
-//Starts game or Quits game
 function startMenu () {
 	inquirer.prompt([{
 		type: "list",
@@ -38,7 +37,6 @@ function userCategoryInput(){
 	return inquirer.prompt(question);	
 }
 
-//Gets game topic and then starts game
 function getTopic () {
 	//inquirer used to set the topic
 
@@ -65,45 +63,48 @@ function userLetterInput(){
 
 //main function
 function guessLetter () {
-	//Recursion while alive
-
 	if(instance.continueGame() === true){
 
-		var pressedLetter = "";
 		var allGuesses = Promise.resolve();
 
 		allGuesses = allGuesses
 		.then( () => userLetterInput() )
-		.then(answers => {
-
-			pressedLetter = answers.guessedLetter.toLowerCase();
-
-			//User input validation
-			if(instance.validateInput(pressedLetter) === false) {
-				pressedLetter = null;
-				console.log("\nThat was not a letter!\n".red)
-			}
-		})
-		.then( () => {
-			//Determines if pressedLetter is in the Word object and acts accordingly
-			if(instance.parser(pressedLetter) === false) {
-				console.log("\nINCORRECT !!\n".red);
-			}else if(instance.parser(pressedLetter) === true) {
-				console.log("\nCORRECT !!\n".green);
-			}
-		})
+		.then(answers => displayValidation(answers) )
+		.then( (pressedLetter) => displayGuessResult(pressedLetter) )
 		.then( () => console.log(`${instance.chosenWord.displayValue}\n`))
 		.then( () => console.log(`Lives remaining: ${instance.lives}\n`))
-		.then( () => {
-			//Check for game over condition and restarts
-			if(instance.gameWon() === true) {
-				console.log("You won the game!\n".green.bold)
-				startMenu();
-			}else if(instance.gameWon() === false) {
-				console.log("You lost :(\n".red.bold)
-				startMenu();
-			}	
-		}).then( () => guessLetter());
+		.then( () => displayGameResult() )
+		.then( () => guessLetter());
 	}
+}
+
+function displayValidation (answers) {
+	var pressedLetter = answers.guessedLetter.toLowerCase();
+
+	//User input validation
+	if(instance.validateInput(pressedLetter) === false) {
+		pressedLetter = null;
+		console.log("\nThat was not a letter!\n".red)
+	}
+
+	return pressedLetter
+}
+
+function displayGuessResult(pressedLetter) {
+	if(instance.parser(pressedLetter) === false) {
+		console.log("\nINCORRECT !!\n".red);
+	}else if(instance.parser(pressedLetter) === true) {
+		console.log("\nCORRECT !!\n".green);
+	}
+}
+
+function displayGameResult() {
+	if(instance.gameWon() === true) {
+		console.log("You won the game!\n".green.bold)
+		startMenu();
+	}else if(instance.gameWon() === false) {
+		console.log("You lost :(\n".red.bold)
+		startMenu();
+	}	
 }
 
